@@ -1,0 +1,43 @@
+{% extends "game/base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h1 class="mb-4">Добро пожаловать!</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="player_name" class="form-label">Ваш ник:</label>
+                <input type="text" class="form-control" id="player_name" name="player_name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Начать игру</button>
+        </form>
+
+        <!-- Таблица последних посетителей -->
+        <div class="mt-5">
+            <h3>Последние посетители:</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Дата посещения</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visitor in last_visitors %}
+                    <tr>
+                        <td>{{ visitor.Name }}</td>
+                        <td>{{ visitor.DateOfVisit|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2">Пока нет посетителей</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
